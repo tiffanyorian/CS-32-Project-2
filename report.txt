@@ -1,0 +1,67 @@
+Design Description
+* Uses a doubly-linked list to represent the CricketTeam. (easy for traversal)
+* Each node in the list represents a player 
+* The implementation also uses separate functions to handle different operations on the team, such as adding, substituting, releasing, and searching for cricketers.
+
+
+
+
+Reasoning for Design Choice
+* The doubly linked list, including the tail pointer made it easier to reference where the traversing pointer is 
+* I attempted to make the functions as efficient and short as I could think of
+
+
+Obstacles
+* One notable challenge was making sure I met all of the requirements for addCricketer. It was very challenging to try and figure out how to not have the function be absurdly long as well as have different implementations for each case (if firstname is different but last name is the same etc) additionally, sorting it without a helper function was difficult. The most difficult part however was creating different code for the first node and having the rest of the nodes follow a similar but different process without making the code too long. 
+* Another challenge i ran into was to make sure I didn’t have any memory leaks and dangling pointers/nodes
+
+
+PseudoCode:
+
+
+Release Cricketer:
+Start from the head of the list.
+* Traverse the list until the desired cricketer (based on firstName and lastName) is found or the end of the list is reached.
+   * If the cricketer is found, adjust the pointers to skip the node from the list and delete it.
+
+
+Merge Cricketers:
+Copy one of the teams to the merged team.
+* Traverse the second team and check if each cricketer exists in the merged team.
+   * If the cricketer exists in the merged team, check if the values match. If they do, update the value; otherwise, remove the cricketer from the merged team.
+      * If the cricketer does not exist in the merged team, add it to the merged team.
+
+
+Test cases:
+Test Case 1
+//addcricketer length
+CricketTeam team; team.addCricketer("Harry", "Potter", 3); 
+team.addCricketer("Ron", "Weasley", 5); 
+team.addCricketer("Hermione", "Granger", 6); 
+assert(team.cricketerCount() == 3); 
+
+
+Test Case 2
+//Ron weasley removed from the team and count should lessen 
+assert(team.releaseCricketer("Ron", "Weasley")); 
+assert(team.cricketerCount() == 2); 
+
+
+
+ Test Case 3
+//change types and merge the teams
+CricketTeam team1;
+team1.addCricketer("Harry", "Potter", 3);
+team1.addCricketer("Ron", "Weasley", 5);
+team1.addCricketer("Hermione", "Granger", 6);
+
+CricketTeam team2;
+team2.addCricketer("Hermione", "Granger", 87);
+team2.addCricketer("Ginny", "Weasley", 5);
+
+CricketTeam mergedTeam;
+mergeCricketers(team1, team2, mergedTeam);
+
+assert(mergedTeam.cricketerCount() == 3); 
+ assert(mergedTeam.rosteredOnCricketTeam("Hermione", "Granger")); 
+assert(mergedTeam.substituteCricketer("Hermione", "Granger", 6)); 
